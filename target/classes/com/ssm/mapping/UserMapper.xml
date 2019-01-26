@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.pojo.User">
+    <id column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="real_name" jdbcType="VARCHAR" property="real_name" />
+    <result column="ID_type" jdbcType="VARCHAR" property="ID_type" />
+    <result column="ID_no" jdbcType="VARCHAR" property="ID_no" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="registration_area" jdbcType="VARCHAR" property="registration_area" />
+    <result column="registration_time" jdbcType="DATE" property="registration_time" />
+    <result column="modification_time" jdbcType="DATE" property="modification_time" />
+    <result column="renter_lv" jdbcType="INTEGER" property="renter_lv" />
+    <result column="landlord_lv" jdbcType="INTEGER" property="landlord_lv" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    username, password, real_name, ID_type, ID_no, phone, registration_area, registration_time, 
+    modification_time, renter_lv, landlord_lv
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.pojo.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from User
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from User
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from User
+    where username = #{username,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.pojo.UserExample">
+    delete from User
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.pojo.User">
+    insert into User (username, password, real_name, 
+      ID_type, ID_no, phone, 
+      registration_area, registration_time, modification_time, 
+      renter_lv, landlord_lv)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{real_name,jdbcType=VARCHAR}, 
+      #{ID_type,jdbcType=VARCHAR}, #{ID_no,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, 
+      #{registration_area,jdbcType=VARCHAR}, #{registration_time,jdbcType=DATE}, #{modification_time,jdbcType=DATE}, 
+      #{renter_lv,jdbcType=INTEGER}, #{landlord_lv,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.pojo.User">
+    insert into User
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="real_name != null">
+        real_name,
+      </if>
+      <if test="ID_type != null">
+        ID_type,
+      </if>
+      <if test="ID_no != null">
+        ID_no,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="registration_area != null">
+        registration_area,
+      </if>
+      <if test="registration_time != null">
+        registration_time,
+      </if>
+      <if test="modification_time != null">
+        modification_time,
+      </if>
+      <if test="renter_lv != null">
+        renter_lv,
+      </if>
+      <if test="landlord_lv != null">
+        landlord_lv,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="real_name != null">
+        #{real_name,jdbcType=VARCHAR},
+      </if>
+      <if test="ID_type != null">
+        #{ID_type,jdbcType=VARCHAR},
+      </if>
+      <if test="ID_no != null">
+        #{ID_no,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="registration_area != null">
+        #{registration_area,jdbcType=VARCHAR},
+      </if>
+      <if test="registration_time != null">
+        #{registration_time,jdbcType=DATE},
+      </if>
+      <if test="modification_time != null">
+        #{modification_time,jdbcType=DATE},
+      </if>
+      <if test="renter_lv != null">
+        #{renter_lv,jdbcType=INTEGER},
+      </if>
+      <if test="landlord_lv != null">
+        #{landlord_lv,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.pojo.UserExample" resultType="java.lang.Long">
+    select count(*) from User
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update User
+    <set>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=CHAR},
+      </if>
+      <if test="record.real_name != null">
+        real_name = #{record.real_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ID_type != null">
+        ID_type = #{record.ID_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ID_no != null">
+        ID_no = #{record.ID_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=CHAR},
+      </if>
+      <if test="record.registration_area != null">
+        registration_area = #{record.registration_area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registration_time != null">
+        registration_time = #{record.registration_time,jdbcType=DATE},
+      </if>
+      <if test="record.modification_time != null">
+        modification_time = #{record.modification_time,jdbcType=DATE},
+      </if>
+      <if test="record.renter_lv != null">
+        renter_lv = #{record.renter_lv,jdbcType=INTEGER},
+      </if>
+      <if test="record.landlord_lv != null">
+        landlord_lv = #{record.landlord_lv,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update User
+    set username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=CHAR},
+      real_name = #{record.real_name,jdbcType=VARCHAR},
+      ID_type = #{record.ID_type,jdbcType=VARCHAR},
+      ID_no = #{record.ID_no,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=CHAR},
+      registration_area = #{record.registration_area,jdbcType=VARCHAR},
+      registration_time = #{record.registration_time,jdbcType=DATE},
+      modification_time = #{record.modification_time,jdbcType=DATE},
+      renter_lv = #{record.renter_lv,jdbcType=INTEGER},
+      landlord_lv = #{record.landlord_lv,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.pojo.User">
+    update User
+    <set>
+      <if test="password != null">
+        password = #{password,jdbcType=CHAR},
+      </if>
+      <if test="real_name != null">
+        real_name = #{real_name,jdbcType=VARCHAR},
+      </if>
+      <if test="ID_type != null">
+        ID_type = #{ID_type,jdbcType=VARCHAR},
+      </if>
+      <if test="ID_no != null">
+        ID_no = #{ID_no,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="registration_area != null">
+        registration_area = #{registration_area,jdbcType=VARCHAR},
+      </if>
+      <if test="registration_time != null">
+        registration_time = #{registration_time,jdbcType=DATE},
+      </if>
+      <if test="modification_time != null">
+        modification_time = #{modification_time,jdbcType=DATE},
+      </if>
+      <if test="renter_lv != null">
+        renter_lv = #{renter_lv,jdbcType=INTEGER},
+      </if>
+      <if test="landlord_lv != null">
+        landlord_lv = #{landlord_lv,jdbcType=INTEGER},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.pojo.User">
+    update User
+    set password = #{password,jdbcType=CHAR},
+      real_name = #{real_name,jdbcType=VARCHAR},
+      ID_type = #{ID_type,jdbcType=VARCHAR},
+      ID_no = #{ID_no,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=CHAR},
+      registration_area = #{registration_area,jdbcType=VARCHAR},
+      registration_time = #{registration_time,jdbcType=DATE},
+      modification_time = #{modification_time,jdbcType=DATE},
+      renter_lv = #{renter_lv,jdbcType=INTEGER},
+      landlord_lv = #{landlord_lv,jdbcType=INTEGER}
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+</mapper>

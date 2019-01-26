@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.DealMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.pojo.Deal">
+    <id column="contract_id" jdbcType="INTEGER" property="contract_id" />
+    <result column="tenant_username" jdbcType="VARCHAR" property="tenant_username" />
+    <result column="landlord_username" jdbcType="VARCHAR" property="landlord_username" />
+    <result column="house_id" jdbcType="INTEGER" property="house_id" />
+    <result column="start_date" jdbcType="DATE" property="start_date" />
+    <result column="end_date" jdbcType="DATE" property="end_date" />
+    <result column="monthly_rent" jdbcType="INTEGER" property="monthly_rent" />
+    <result column="tot_rent" jdbcType="INTEGER" property="tot_rent" />
+    <result column="landlord_agency_fee" jdbcType="INTEGER" property="landlord_agency_fee" />
+    <result column="tenant_agency_fee" jdbcType="INTEGER" property="tenant_agency_fee" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="registration_time" jdbcType="DATE" property="registration_time" />
+    <result column="modification_time" jdbcType="DATE" property="modification_time" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    contract_id, tenant_username, landlord_username, house_id, start_date, end_date, 
+    monthly_rent, tot_rent, landlord_agency_fee, tenant_agency_fee, state, registration_time, 
+    modification_time
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.pojo.DealExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from deal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from deal
+    where contract_id = #{contract_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from deal
+    where contract_id = #{contract_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.pojo.DealExample">
+    delete from deal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.pojo.Deal">
+    insert into deal (contract_id, tenant_username, landlord_username, 
+      house_id, start_date, end_date, 
+      monthly_rent, tot_rent, landlord_agency_fee, 
+      tenant_agency_fee, state, registration_time, 
+      modification_time)
+    values (#{contract_id,jdbcType=INTEGER}, #{tenant_username,jdbcType=VARCHAR}, #{landlord_username,jdbcType=VARCHAR}, 
+      #{house_id,jdbcType=INTEGER}, #{start_date,jdbcType=DATE}, #{end_date,jdbcType=DATE}, 
+      #{monthly_rent,jdbcType=INTEGER}, #{tot_rent,jdbcType=INTEGER}, #{landlord_agency_fee,jdbcType=INTEGER}, 
+      #{tenant_agency_fee,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, #{registration_time,jdbcType=DATE}, 
+      #{modification_time,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.pojo.Deal">
+    insert into deal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="contract_id != null">
+        contract_id,
+      </if>
+      <if test="tenant_username != null">
+        tenant_username,
+      </if>
+      <if test="landlord_username != null">
+        landlord_username,
+      </if>
+      <if test="house_id != null">
+        house_id,
+      </if>
+      <if test="start_date != null">
+        start_date,
+      </if>
+      <if test="end_date != null">
+        end_date,
+      </if>
+      <if test="monthly_rent != null">
+        monthly_rent,
+      </if>
+      <if test="tot_rent != null">
+        tot_rent,
+      </if>
+      <if test="landlord_agency_fee != null">
+        landlord_agency_fee,
+      </if>
+      <if test="tenant_agency_fee != null">
+        tenant_agency_fee,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="registration_time != null">
+        registration_time,
+      </if>
+      <if test="modification_time != null">
+        modification_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="contract_id != null">
+        #{contract_id,jdbcType=INTEGER},
+      </if>
+      <if test="tenant_username != null">
+        #{tenant_username,jdbcType=VARCHAR},
+      </if>
+      <if test="landlord_username != null">
+        #{landlord_username,jdbcType=VARCHAR},
+      </if>
+      <if test="house_id != null">
+        #{house_id,jdbcType=INTEGER},
+      </if>
+      <if test="start_date != null">
+        #{start_date,jdbcType=DATE},
+      </if>
+      <if test="end_date != null">
+        #{end_date,jdbcType=DATE},
+      </if>
+      <if test="monthly_rent != null">
+        #{monthly_rent,jdbcType=INTEGER},
+      </if>
+      <if test="tot_rent != null">
+        #{tot_rent,jdbcType=INTEGER},
+      </if>
+      <if test="landlord_agency_fee != null">
+        #{landlord_agency_fee,jdbcType=INTEGER},
+      </if>
+      <if test="tenant_agency_fee != null">
+        #{tenant_agency_fee,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="registration_time != null">
+        #{registration_time,jdbcType=DATE},
+      </if>
+      <if test="modification_time != null">
+        #{modification_time,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.pojo.DealExample" resultType="java.lang.Long">
+    select count(*) from deal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update deal
+    <set>
+      <if test="record.contract_id != null">
+        contract_id = #{record.contract_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.tenant_username != null">
+        tenant_username = #{record.tenant_username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.landlord_username != null">
+        landlord_username = #{record.landlord_username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.house_id != null">
+        house_id = #{record.house_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.start_date != null">
+        start_date = #{record.start_date,jdbcType=DATE},
+      </if>
+      <if test="record.end_date != null">
+        end_date = #{record.end_date,jdbcType=DATE},
+      </if>
+      <if test="record.monthly_rent != null">
+        monthly_rent = #{record.monthly_rent,jdbcType=INTEGER},
+      </if>
+      <if test="record.tot_rent != null">
+        tot_rent = #{record.tot_rent,jdbcType=INTEGER},
+      </if>
+      <if test="record.landlord_agency_fee != null">
+        landlord_agency_fee = #{record.landlord_agency_fee,jdbcType=INTEGER},
+      </if>
+      <if test="record.tenant_agency_fee != null">
+        tenant_agency_fee = #{record.tenant_agency_fee,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registration_time != null">
+        registration_time = #{record.registration_time,jdbcType=DATE},
+      </if>
+      <if test="record.modification_time != null">
+        modification_time = #{record.modification_time,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update deal
+    set contract_id = #{record.contract_id,jdbcType=INTEGER},
+      tenant_username = #{record.tenant_username,jdbcType=VARCHAR},
+      landlord_username = #{record.landlord_username,jdbcType=VARCHAR},
+      house_id = #{record.house_id,jdbcType=INTEGER},
+      start_date = #{record.start_date,jdbcType=DATE},
+      end_date = #{record.end_date,jdbcType=DATE},
+      monthly_rent = #{record.monthly_rent,jdbcType=INTEGER},
+      tot_rent = #{record.tot_rent,jdbcType=INTEGER},
+      landlord_agency_fee = #{record.landlord_agency_fee,jdbcType=INTEGER},
+      tenant_agency_fee = #{record.tenant_agency_fee,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=VARCHAR},
+      registration_time = #{record.registration_time,jdbcType=DATE},
+      modification_time = #{record.modification_time,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.pojo.Deal">
+    update deal
+    <set>
+      <if test="tenant_username != null">
+        tenant_username = #{tenant_username,jdbcType=VARCHAR},
+      </if>
+      <if test="landlord_username != null">
+        landlord_username = #{landlord_username,jdbcType=VARCHAR},
+      </if>
+      <if test="house_id != null">
+        house_id = #{house_id,jdbcType=INTEGER},
+      </if>
+      <if test="start_date != null">
+        start_date = #{start_date,jdbcType=DATE},
+      </if>
+      <if test="end_date != null">
+        end_date = #{end_date,jdbcType=DATE},
+      </if>
+      <if test="monthly_rent != null">
+        monthly_rent = #{monthly_rent,jdbcType=INTEGER},
+      </if>
+      <if test="tot_rent != null">
+        tot_rent = #{tot_rent,jdbcType=INTEGER},
+      </if>
+      <if test="landlord_agency_fee != null">
+        landlord_agency_fee = #{landlord_agency_fee,jdbcType=INTEGER},
+      </if>
+      <if test="tenant_agency_fee != null">
+        tenant_agency_fee = #{tenant_agency_fee,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="registration_time != null">
+        registration_time = #{registration_time,jdbcType=DATE},
+      </if>
+      <if test="modification_time != null">
+        modification_time = #{modification_time,jdbcType=DATE},
+      </if>
+    </set>
+    where contract_id = #{contract_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.pojo.Deal">
+    update deal
+    set tenant_username = #{tenant_username,jdbcType=VARCHAR},
+      landlord_username = #{landlord_username,jdbcType=VARCHAR},
+      house_id = #{house_id,jdbcType=INTEGER},
+      start_date = #{start_date,jdbcType=DATE},
+      end_date = #{end_date,jdbcType=DATE},
+      monthly_rent = #{monthly_rent,jdbcType=INTEGER},
+      tot_rent = #{tot_rent,jdbcType=INTEGER},
+      landlord_agency_fee = #{landlord_agency_fee,jdbcType=INTEGER},
+      tenant_agency_fee = #{tenant_agency_fee,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      registration_time = #{registration_time,jdbcType=DATE},
+      modification_time = #{modification_time,jdbcType=DATE}
+    where contract_id = #{contract_id,jdbcType=INTEGER}
+  </update>
+  
+  <resultMap id="BaseResultMap1" type="com.ssm.pojo.Deal">
+    <id column="contract_id" jdbcType="INTEGER" property="contract_id" />
+    <result column="tenant_username" jdbcType="VARCHAR" property="tenant_username" />
+    <result column="landlord_username" jdbcType="VARCHAR" property="landlord_username" />
+    <result column="deal.house_id" jdbcType="INTEGER" property="house_id" />
+    <result column="start_date" jdbcType="DATE" property="start_date" />
+    <result column="end_date" jdbcType="DATE" property="end_date" />
+    <result column="monthly_rent" jdbcType="INTEGER" property="monthly_rent" />
+    <result column="tot_rent" jdbcType="INTEGER" property="tot_rent" />
+    <result column="landlord_agency_fee" jdbcType="INTEGER" property="landlord_agency_fee" />
+    <result column="tenant_agency_fee" jdbcType="INTEGER" property="tenant_agency_fee" />
+    <result column="deal.state" jdbcType="VARCHAR" property="state" />
+    <result column="deal.registration_time" jdbcType="DATE" property="registration_time" />
+    <result column="deal.modification_time" jdbcType="DATE" property="modification_time" />
+  </resultMap>
+   <select id="selectByPlace" resultMap="BaseResultMap1">
+    select contract_id, tenant_username, landlord_username, deal.house_id, start_date, end_date, 
+    monthly_rent, tot_rent, landlord_agency_fee, tenant_agency_fee, deal.state, deal.registration_time, 
+   deal. modification_time
+    from deal inner join Rent_house on deal.house_id=Rent_house.house_id
+    where Rent_house.country = 'China'
+    and Rent_house.province=#{0}
+    and deal.modification_time between #{1} and #{2}
+    and (deal.state="1" or deal.state="2");
+  </select>
+  
+</mapper>

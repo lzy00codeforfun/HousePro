@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.WantedHouseMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.pojo.WantedHouse">
+    <id column="house_id" jdbcType="INTEGER" property="house_id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="community" jdbcType="VARCHAR" property="community" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="area_lb" jdbcType="INTEGER" property="area_lb" />
+    <result column="area_ub" jdbcType="INTEGER" property="area_ub" />
+    <result column="floor_lb" jdbcType="INTEGER" property="floor_lb" />
+    <result column="floor_ub" jdbcType="INTEGER" property="floor_ub" />
+    <result column="elevator" jdbcType="INTEGER" property="elevator" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="rent_lb" jdbcType="INTEGER" property="rent_lb" />
+    <result column="rent_ub" jdbcType="INTEGER" property="rent_ub" />
+    <result column="registration_time" jdbcType="DATE" property="registration_time" />
+    <result column="modification_time" jdbcType="DATE" property="modification_time" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    house_id, username, country, province, city, district, community, type, area_lb, 
+    area_ub, floor_lb, floor_ub, elevator, title, description, rent_lb, rent_ub, registration_time, 
+    modification_time
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.pojo.WantedHouseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Wanted_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Wanted_house
+    where house_id = #{house_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Wanted_house
+    where house_id = #{house_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.pojo.WantedHouseExample">
+    delete from Wanted_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.pojo.WantedHouse">
+    insert into Wanted_house (house_id, username, country, 
+      province, city, district, 
+      community, type, area_lb, 
+      area_ub, floor_lb, floor_ub, 
+      elevator, title, description, 
+      rent_lb, rent_ub, registration_time, 
+      modification_time)
+    values (#{house_id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+      #{community,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{area_lb,jdbcType=INTEGER}, 
+      #{area_ub,jdbcType=INTEGER}, #{floor_lb,jdbcType=INTEGER}, #{floor_ub,jdbcType=INTEGER}, 
+      #{elevator,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{rent_lb,jdbcType=INTEGER}, #{rent_ub,jdbcType=INTEGER}, #{registration_time,jdbcType=DATE}, 
+      #{modification_time,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.pojo.WantedHouse">
+    insert into Wanted_house
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="house_id != null">
+        house_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="community != null">
+        community,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="area_lb != null">
+        area_lb,
+      </if>
+      <if test="area_ub != null">
+        area_ub,
+      </if>
+      <if test="floor_lb != null">
+        floor_lb,
+      </if>
+      <if test="floor_ub != null">
+        floor_ub,
+      </if>
+      <if test="elevator != null">
+        elevator,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="rent_lb != null">
+        rent_lb,
+      </if>
+      <if test="rent_ub != null">
+        rent_ub,
+      </if>
+      <if test="registration_time != null">
+        registration_time,
+      </if>
+      <if test="modification_time != null">
+        modification_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="house_id != null">
+        #{house_id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="community != null">
+        #{community,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="area_lb != null">
+        #{area_lb,jdbcType=INTEGER},
+      </if>
+      <if test="area_ub != null">
+        #{area_ub,jdbcType=INTEGER},
+      </if>
+      <if test="floor_lb != null">
+        #{floor_lb,jdbcType=INTEGER},
+      </if>
+      <if test="floor_ub != null">
+        #{floor_ub,jdbcType=INTEGER},
+      </if>
+      <if test="elevator != null">
+        #{elevator,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="rent_lb != null">
+        #{rent_lb,jdbcType=INTEGER},
+      </if>
+      <if test="rent_ub != null">
+        #{rent_ub,jdbcType=INTEGER},
+      </if>
+      <if test="registration_time != null">
+        #{registration_time,jdbcType=DATE},
+      </if>
+      <if test="modification_time != null">
+        #{modification_time,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.pojo.WantedHouseExample" resultType="java.lang.Long">
+    select count(*) from Wanted_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Wanted_house
+    <set>
+      <if test="record.house_id != null">
+        house_id = #{record.house_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null">
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.district != null">
+        district = #{record.district,jdbcType=VARCHAR},
+      </if>
+      <if test="record.community != null">
+        community = #{record.community,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area_lb != null">
+        area_lb = #{record.area_lb,jdbcType=INTEGER},
+      </if>
+      <if test="record.area_ub != null">
+        area_ub = #{record.area_ub,jdbcType=INTEGER},
+      </if>
+      <if test="record.floor_lb != null">
+        floor_lb = #{record.floor_lb,jdbcType=INTEGER},
+      </if>
+      <if test="record.floor_ub != null">
+        floor_ub = #{record.floor_ub,jdbcType=INTEGER},
+      </if>
+      <if test="record.elevator != null">
+        elevator = #{record.elevator,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rent_lb != null">
+        rent_lb = #{record.rent_lb,jdbcType=INTEGER},
+      </if>
+      <if test="record.rent_ub != null">
+        rent_ub = #{record.rent_ub,jdbcType=INTEGER},
+      </if>
+      <if test="record.registration_time != null">
+        registration_time = #{record.registration_time,jdbcType=DATE},
+      </if>
+      <if test="record.modification_time != null">
+        modification_time = #{record.modification_time,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Wanted_house
+    set house_id = #{record.house_id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      district = #{record.district,jdbcType=VARCHAR},
+      community = #{record.community,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      area_lb = #{record.area_lb,jdbcType=INTEGER},
+      area_ub = #{record.area_ub,jdbcType=INTEGER},
+      floor_lb = #{record.floor_lb,jdbcType=INTEGER},
+      floor_ub = #{record.floor_ub,jdbcType=INTEGER},
+      elevator = #{record.elevator,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      rent_lb = #{record.rent_lb,jdbcType=INTEGER},
+      rent_ub = #{record.rent_ub,jdbcType=INTEGER},
+      registration_time = #{record.registration_time,jdbcType=DATE},
+      modification_time = #{record.modification_time,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.pojo.WantedHouse">
+    update Wanted_house
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="community != null">
+        community = #{community,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="area_lb != null">
+        area_lb = #{area_lb,jdbcType=INTEGER},
+      </if>
+      <if test="area_ub != null">
+        area_ub = #{area_ub,jdbcType=INTEGER},
+      </if>
+      <if test="floor_lb != null">
+        floor_lb = #{floor_lb,jdbcType=INTEGER},
+      </if>
+      <if test="floor_ub != null">
+        floor_ub = #{floor_ub,jdbcType=INTEGER},
+      </if>
+      <if test="elevator != null">
+        elevator = #{elevator,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="rent_lb != null">
+        rent_lb = #{rent_lb,jdbcType=INTEGER},
+      </if>
+      <if test="rent_ub != null">
+        rent_ub = #{rent_ub,jdbcType=INTEGER},
+      </if>
+      <if test="registration_time != null">
+        registration_time = #{registration_time,jdbcType=DATE},
+      </if>
+      <if test="modification_time != null">
+        modification_time = #{modification_time,jdbcType=DATE},
+      </if>
+    </set>
+    where house_id = #{house_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.pojo.WantedHouse">
+    update Wanted_house
+    set username = #{username,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      community = #{community,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      area_lb = #{area_lb,jdbcType=INTEGER},
+      area_ub = #{area_ub,jdbcType=INTEGER},
+      floor_lb = #{floor_lb,jdbcType=INTEGER},
+      floor_ub = #{floor_ub,jdbcType=INTEGER},
+      elevator = #{elevator,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      rent_lb = #{rent_lb,jdbcType=INTEGER},
+      rent_ub = #{rent_ub,jdbcType=INTEGER},
+      registration_time = #{registration_time,jdbcType=DATE},
+      modification_time = #{modification_time,jdbcType=DATE}
+    where house_id = #{house_id,jdbcType=INTEGER}
+  </update>
+</mapper>
